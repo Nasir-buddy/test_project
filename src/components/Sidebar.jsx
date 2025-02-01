@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Home, MessageSquare, ListTodo, Users, Settings, ChevronLeft, ChevronRight } from "lucide-react"
+import { TbCircleDottedLetterM } from "react-icons/tb";
 
 const menuItems = [
   { icon: Home, label: "Home" },
@@ -41,7 +42,9 @@ export default function Sidebar() {
         <div className="flex items-center justify-between p-4">
           {isOpen && (
             <div className="flex items-center gap-2 overflow-hidden">
-              <div className="w-8 h-8 bg-purple-600 rounded-lg flex-shrink-0"></div>
+              <div className="w-8 h-8 flex items-center justify-center rounded-lg flex-shrink-0">
+              <TbCircleDottedLetterM  className="text-3xl text-[#5030e5]"/>
+              </div>
               <span className="font-semibold whitespace-nowrap">Project M.</span>
             </div>
           )}
