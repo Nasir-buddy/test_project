@@ -7,21 +7,35 @@ import TaskCard from "./TaskCard"
 
 export default function TodoSection({ tasks }) {
   const [showAddForm, setShowAddForm] = useState(false)
-  const [newTask, setNewTask] = useState({ title: "", description: "" })
+  const [newTask, setNewTask] = useState({
+    title: "",
+    description: "",
+    priority: "low",
+    tags: ""
+  })
   const dispatch = useDispatch()
 
   const handleAddTask = (e) => {
     e.preventDefault()
+    // Split comma-separated tags into an array, trim spaces, and remove empty entries
+    const tagsArray = newTask.tags
+      .split(",")
+      .map((tag) => tag.trim())
+      .filter((tag) => tag !== "")
+
     const task = {
       id: Date.now().toString(), // Ensure unique ID
-      ...newTask,
-      priority: "low",
+      title: newTask.title,
+      description: newTask.description,
+      priority: newTask.priority,
+      tags: tagsArray,
       comments: 0,
       files: 0,
       users: ["user1"],
     }
     dispatch(addTask({ status: "todo", task }))
-    setNewTask({ title: "", description: "" })
+    // Reset form state
+    setNewTask({ title: "", description: "", priority: "low", tags: "" })
     setShowAddForm(false)
   }
 
@@ -55,6 +69,25 @@ export default function TodoSection({ tasks }) {
             className="w-full mb-2 p-2 border rounded"
             required
           />
+          {/* Priority dropdown */}
+          <select
+            value={newTask.priority}
+            onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
+            className="w-full mb-2 p-2 border rounded"
+            required
+          >
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
+          {/* Comma-separated tags input */}
+          <input
+            type="text"
+            placeholder="Comma-separated tags"
+            value={newTask.tags}
+            onChange={(e) => setNewTask({ ...newTask, tags: e.target.value })}
+            className="w-full mb-2 p-2 border rounded"
+          />
           <div className="flex gap-2">
             <button type="submit" className="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700">
               Add
@@ -86,7 +119,6 @@ export default function TodoSection({ tasks }) {
           </div>
         )}
       </Droppable>
-    </div>
-  )
+    </div>
+  )
 }
-

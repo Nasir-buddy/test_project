@@ -1,16 +1,30 @@
 import { MessageSquare, Paperclip, MoreHorizontal } from "lucide-react"
 
 export default function TaskCard({ task }) {
+  let priorityClass = ""
+  if (task.priority === "low") {
+    priorityClass = "bg-green-100 text-green-600"
+  } else if (task.priority === "medium") {
+    priorityClass = "bg-yellow-100 text-yellow-600"
+  } else if (task.priority === "high") {
+    priorityClass = "bg-red-100 text-red-600"
+  }
+
   return (
+
     <div className="bg-white p-4 rounded-lg shadow-sm">
       <div className="flex justify-between items-start mb-2">
-        <span
-          className={`px-2 py-1 rounded-md text-xs ${
-            task.priority === "low" ? "bg-orange-100 text-orange-600" : "bg-red-100 text-red-600"
-          }`}
-        >
-          {task.priority}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className={`px-2 py-1 rounded-md text-xs ${priorityClass}`}>
+            {task.priority}
+          </span>
+          {/* Render tags beside the priority badge */}
+          {task.tags && task.tags.length > 0 && task.tags.map((tag, index) => (
+            <span key={index} className="px-2 py-1 rounded-md text-xs bg-blue-100 text-blue-600">
+              {tag}
+            </span>
+          ))}
+        </div>
         <button className="text-gray-400 hover:text-gray-600">
           <MoreHorizontal size={16} />
         </button>
@@ -37,7 +51,7 @@ export default function TaskCard({ task }) {
           </div>
         </div>
       </div>
-    </div>
-  )
+    </div>
+  )
 }
 
