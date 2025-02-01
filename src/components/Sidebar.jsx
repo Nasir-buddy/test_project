@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Home, MessageSquare, ListTodo, Users, Settings, ChevronLeft, ChevronRight } from "lucide-react"
 
 const menuItems = [
@@ -11,6 +11,22 @@ const menuItems = [
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true)
+  const [reminderTime, setReminderTime] = useState(60);
+
+
+  useEffect(() => {
+    const savedReminderTime = localStorage.getItem("reminderTime");
+    if (savedReminderTime) {
+      setReminderTime(parseInt(savedReminderTime, 10));
+    }
+  }, []);
+
+  const handleReminderTimeChange = (e) => {
+    const newReminderTime = parseInt(e.target.value, 10);
+    setReminderTime(newReminderTime);
+    localStorage.setItem("reminderTime", newReminderTime);
+  };
+
 
   const toggleSidebar = () => setIsOpen(!isOpen)
 
@@ -49,6 +65,23 @@ export default function Sidebar() {
             </div>
           ))}
         </nav>
+        {isOpen && (
+          <div className="p-4 border-t border-gray-200">
+            <h3 className="text-sm font-semibold mb-2">Reminder Settings</h3>
+            <label className="text-sm text-gray-700 flex flex-col">
+              Notify me:
+              <input
+                type="number"
+                min="1"
+                value={reminderTime}
+                onChange={handleReminderTimeChange}
+                className="w-full mt-1 p-1 border rounded"
+              />
+              <span className="text-xs text-gray-500">minutes before due date</span>
+            </label>
+          </div>
+        )}
+
       </div>
       
     </div>

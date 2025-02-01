@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux"
 import { DragDropContext } from "react-beautiful-dnd"
-import { moveTask } from "../store/tasksSlice"
+import { moveTask,updateTask } from "../store/tasksSlice"
 import TodoSection from "./TodoSection"
 import InProgressSection from "./InProgressSection"
 import DoneSection from "./DoneSection"
@@ -21,6 +21,10 @@ export default function KanbanBoard() {
     }
   }
 
+  const handleTaskUpdate = (updatedTask) => {
+    dispatch(updateTask(updatedTask)); 
+  };
+
   const filteredTasks = (status) => {
     return tasks[status].filter((task) => {
       if (filter === "all") return true
@@ -32,8 +36,8 @@ export default function KanbanBoard() {
     <DragDropContext onDragEnd={handleDragEnd}>
       <div className="flex gap-6 p-6">
         <TodoSection tasks={filteredTasks("todo")} />
-        <InProgressSection tasks={filteredTasks("inProgress")} />
-        <DoneSection tasks={filteredTasks("done")} />
+        <InProgressSection tasks={filteredTasks("inProgress")} onUpdateTask={handleTaskUpdate} />
+        <DoneSection tasks={filteredTasks("done")}  onUpdateTask={handleTaskUpdate}/>
       </div>
     </DragDropContext>
   )

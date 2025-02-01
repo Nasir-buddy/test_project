@@ -35,12 +35,20 @@ const tasksSlice = createSlice({
         state.tasks[toStatus].push(task)
       }
     },
+
+    updateTask: (state, action) => {
+      const { status, updatedTask } = action.payload;
+      const taskIndex = state.tasks[status].findIndex((task) => task.id === updatedTask.id);
+      if (taskIndex !== -1) {
+        state.tasks[status][taskIndex] = updatedTask;
+      }
+    },
     setFilter: (state, action) => {
       state.filter = action.payload
     },
   },
 })
 
-export const { addTask, moveTask, setFilter } = tasksSlice.actions
+export const { addTask, moveTask,updateTask, setFilter } = tasksSlice.actions
 export default tasksSlice.reducer
 

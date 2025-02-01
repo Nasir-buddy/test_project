@@ -1,6 +1,21 @@
 import { MessageSquare, Paperclip, MoreHorizontal } from "lucide-react"
+import React,{useState} from "react";
+import { useDispatch } from "react-redux";
+import { updateTask} from "../store/tasksSlice";
 
-export default function TaskCard({ task }) {
+
+
+
+export default function TaskCard({ task,updateTask }) {
+  const dispatch = useDispatch();
+
+  const [dueDate, setDueDate] = useState(task.dueDate || '');
+
+  const handleDueDateChange = (e) => {
+    const newDueDate = e.target.value;
+    setDueDate(newDueDate);
+    dispatch(updateTask({ ...task, dueDate: newDueDate }));
+  };
   let priorityClass = ""
   if (task.priority === "low") {
     priorityClass = "bg-green-100 text-green-600"
@@ -33,6 +48,17 @@ export default function TaskCard({ task }) {
       <h3 className="font-semibold mb-2">{task.title}</h3>
       <p className="text-sm text-gray-600 mb-4">{task.description}</p>
 
+      <div className="mb-4">
+        <label htmlFor="due-date" className="text-sm text-gray-600">Due Date:</label>
+        <input
+          type="datetime-local"
+          id="due-date"
+          value={dueDate}
+          onChange={handleDueDateChange}
+          className="w-full px-3 py-2 mt-1 text-sm border rounded-md border-gray-300 focus:ring-2 focus:ring-blue-500"
+        />
+      </div>
+      
       <div className="flex justify-between items-center">
         <div className="flex -space-x-2">
           {task.users.map((user, index) => (

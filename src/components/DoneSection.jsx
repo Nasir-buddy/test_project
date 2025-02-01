@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Droppable, Draggable } from "react-beautiful-dnd"
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd"
 import { Plus } from "lucide-react"
 import { useDispatch } from "react-redux"
 import { addTask } from "../store/tasksSlice"
@@ -102,7 +102,8 @@ export default function DoneSection({ tasks }) {
         </form>
       )}
 
-      <Droppable droppableId="done">
+      <DragDropContext>
+        <Droppable droppableId="done">
         {(provided) => (
           <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
             {tasks.map((task, index) => (
@@ -118,6 +119,7 @@ export default function DoneSection({ tasks }) {
           </div>
         )}
       </Droppable>
+      </DragDropContext>
     </div>
   )
 }

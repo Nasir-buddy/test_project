@@ -1,27 +1,28 @@
-
-import { useState } from "react"
-import { Droppable, Draggable } from "react-beautiful-dnd"
-import { Plus } from "lucide-react"
-import { useDispatch } from "react-redux"
-import { addTask } from "../store/tasksSlice"
-import TaskCard from "./TaskCard"
+import { useState } from "react";
+import { Droppable, Draggable } from "react-beautiful-dnd";
+import { Plus } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { addTask } from "../store/tasksSlice";
+import TaskCard from "./TaskCard";
 
 export default function InProgressSection({ tasks }) {
-  const [showAddForm, setShowAddForm] = useState(false)
+  const [showAddForm, setShowAddForm] = useState(false);
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
     priority: "low",
-    tags: ""
-  })
-  const dispatch = useDispatch()
+    tags: "",
+    dueDate: "",
+  });
+  const dispatch = useDispatch();
+  const now = new Date();
 
   const handleAddTask = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const tagsArray = newTask.tags
       .split(",")
       .map((tag) => tag.trim())
-      .filter((tag) => tag !== "")
+      .filter((tag) => tag !== "");
 
     const task = {
       id: Date.now().toString(),
@@ -32,12 +33,12 @@ export default function InProgressSection({ tasks }) {
       comments: 0,
       files: 0,
       users: ["user1"],
-    }
-    dispatch(addTask({ status: "inProgress", task }))
+    };
+    dispatch(addTask({ status: "inProgress", task }));
     // Reset form state
-    setNewTask({ title: "", description: "", priority: "low", tags: "" })
-    setShowAddForm(false)
-  }
+    setNewTask({ title: "", description: "", priority: "low", tags: "" });
+    setShowAddForm(false);
+  };
 
   return (
     <div className="flex-1 bg-gray-50 rounded-lg p-4">
@@ -45,15 +46,22 @@ export default function InProgressSection({ tasks }) {
         <div className="flex items-center gap-2">
           <div className="w-2 h-2 rounded-full bg-yellow-400"></div>
           <h2 className="font-semibold">In Progress</h2>
-          <span className="ml-2 bg-gray-200 px-2 rounded-full text-sm">{tasks.length}</span>
+          <span className="ml-2 bg-gray-200 px-2 rounded-full text-sm">
+            {tasks.length}
+          </span>
         </div>
-        <button onClick={() => setShowAddForm(true)} className="p-1 hover:bg-gray-100 rounded">
+        <button
+          onClick={() => setShowAddForm(true)}
+          className="p-1 hover:bg-gray-100 rounded"
+        >
           <Plus size={20} />
         </button>
       </div>
-
       {showAddForm && (
-        <form onSubmit={handleAddTask} className="mb-4 p-4 bg-white rounded-lg shadow-sm">
+        <form
+          onSubmit={handleAddTask}
+          className="mb-4 p-4 bg-white rounded-lg shadow-sm"
+        >
           <input
             type="text"
             placeholder="Task title"
@@ -65,14 +73,18 @@ export default function InProgressSection({ tasks }) {
           <textarea
             placeholder="Task description"
             value={newTask.description}
-            onChange={(e) => setNewTask({ ...newTask, description: e.target.value })}
+            onChange={(e) =>
+              setNewTask({ ...newTask, description: e.target.value })
+            }
             className="w-full mb-2 p-2 border rounded"
             required
           />
           {/* Priority dropdown */}
           <select
             value={newTask.priority}
-            onChange={(e) => setNewTask({ ...newTask, priority: e.target.value })}
+            onChange={(e) =>
+              setNewTask({ ...newTask, priority: e.target.value })
+            }
             className="w-full mb-2 p-2 border rounded"
             required
           >
@@ -89,7 +101,10 @@ export default function InProgressSection({ tasks }) {
             className="w-full mb-2 p-2 border rounded"
           />
           <div className="flex gap-2">
-            <button type="submit" className="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700">
+            <button
+              type="submit"
+              className="px-3 py-1 bg-purple-600 text-white rounded hover:bg-purple-700"
+            >
               Add
             </button>
             <button
@@ -102,23 +117,46 @@ export default function InProgressSection({ tasks }) {
           </div>
         </form>
       )}
-
       <Droppable droppableId="inProgress">
         {(provided) => (
-          <div {...provided.droppableProps} ref={provided.innerRef} className="space-y-4">
-            {tasks.map((task, index) => (
-              <Draggable key={task.id} draggableId={task.id} index={index}>
-                {(provided) => (
-                  <div ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}>
-                    <TaskCard task={task} />
-                  </div>
-                )}
-              </Draggable>
-            ))}
+          <div
+            {...provided.droppableProps}
+            ref={provided.innerRef}
+            className="space-y-4"
+          >
+            {tasks.map((task, index) => {
+              const dueDate = new Date(task.dueDate);
+              const isPastDue = dueDate <= now;
+              const isDueSoon = dueDate - now <= 5 * 60 * 1000;
+
+              return (
+                <Draggable key={task.id} draggableId={task.id} index={index}>
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <TaskCard
+                        task={task}
+                        style={{
+                          border: isPastDue
+                            ? "2px solid red"
+                            : isDueSoon
+                            ? "2px solid orange"
+                            : "none",
+                        }}
+                      />
+                    </div>
+                  )}
+                </Draggable>
+              );
+            })}
             {provided.placeholder}
           </div>
         )}
       </Droppable>
-    </div>
-  )
+          
+    </div>
+  );
 }

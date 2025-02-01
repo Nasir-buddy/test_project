@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Droppable, Draggable } from "react-beautiful-dnd"
 import { Plus } from "lucide-react"
 import { useDispatch } from "react-redux"
@@ -11,20 +11,50 @@ export default function TodoSection({ tasks }) {
     title: "",
     description: "",
     priority: "low",
-    tags: ""
+    tags: "",
+    dueDate:""
   })
   const dispatch = useDispatch()
 
+  useEffect(() => {
+    const now=new Date();
+    tasks.forEach(task=>{
+      if (task.dueDate) {
+        const dueDate = new Date(task.dueDate);
+        const timeRemaining = dueDate - now;
+
+        if (timeRemaining <= 0) {
+          showNotification(`Task "${task.title}" is past due!`);
+        } else if (timeRemaining <= 5 * 60 * 1000) {
+          showNotification(`Task "${task.title}" is due soon!`);
+        }
+      }
+    });
+  }, [tasks]);
+
+
+  const showNotification = (message) => {
+    if (Notification.permission === "granted") {
+      new Notification("Task Reminder", { body: message });
+    } else if (Notification.permission !== "denied") {
+      Notification.requestPermission().then((permission) => {
+        if (permission === "granted") {
+          new Notification("Task Reminder", { body: message });
+        }
+      });
+    }
+  };
+
+
   const handleAddTask = (e) => {
     e.preventDefault()
-    // Split comma-separated tags into an array, trim spaces, and remove empty entries
     const tagsArray = newTask.tags
       .split(",")
       .map((tag) => tag.trim())
       .filter((tag) => tag !== "")
 
     const task = {
-      id: Date.now().toString(), // Ensure unique ID
+      id: Date.now().toString(), 
       title: newTask.title,
       description: newTask.description,
       priority: newTask.priority,
