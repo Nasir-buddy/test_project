@@ -98,7 +98,7 @@ export default function TaskCard({ task, updateTask }) {
         />
       </div>
 
-      {task.subtasks?.length > 0 && (
+      {task.subtasks && task.subtasks.length > 0 && (
         <div className="bg-gray-100 p-3 rounded-lg mt-2">
           <h4 className="font-semibold text-sm mb-2">Subtasks</h4>
           <ul className="list-disc list-inside text-gray-700 text-sm">

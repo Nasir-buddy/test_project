@@ -51,14 +51,19 @@ const tasksSlice = createSlice({
 
     // Add Subtask to a specific task
     addSubtask: (state, action) => {
-      const { status, taskId, subtaskTitle } = action.payload;
-      const task = state.tasks[status].find((task) => task.id === taskId);
-      if (task) {
-        task.subtasks.push({
-          id: Date.now().toString(),
-          title: subtaskTitle,
-          completed: false,
-        });
+      const { status, taskId, subtaskTitle } = action.payload
+      if (state.tasks[status]) {
+        const task = state.tasks[status].find((task) => task.id === taskId)
+        if (task) {
+          if (!Array.isArray(task.subtasks)) {
+            task.subtasks = []
+          }
+          task.subtasks.push({
+            id: Date.now().toString(),
+            title: subtaskTitle,
+            completed: false,
+          })
+        }
       }
     },
 
