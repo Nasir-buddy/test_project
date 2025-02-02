@@ -13,6 +13,7 @@ const initialState = {
         files: 0,
         users: ["user1", "user2", "user3"],
         subtasks: [],
+        dueDate: null, // Added dueDate field
       },
     ],
     inProgress: [],
@@ -41,8 +42,10 @@ const tasksSlice = createSlice({
         const [task] = state.tasks[fromStatus].splice(taskIndex, 1);
         state.tasks[toStatus].push(task);
       }
-    },    
-setFilter: (state, action) => {
+    },
+
+    // Set task filter
+    setFilter: (state, action) => {
       state.filter = action.payload;
     },
 
@@ -59,7 +62,7 @@ setFilter: (state, action) => {
       }
     },
 
-    //  Toggle Subtask Completion
+    // Toggle Subtask Completion
     toggleSubtask: (state, action) => {
       const { status, taskId, subtaskId } = action.payload;
       const task = state.tasks[status].find((task) => task.id === taskId);
@@ -77,6 +80,15 @@ setFilter: (state, action) => {
       const task = state.tasks[status].find((task) => task.id === taskId);
       if (task) {
         task.subtasks = task.subtasks.filter((sub) => sub.id !== subtaskId);
+      }
+    },
+
+    // Update Task
+    updateTask: (state, action) => {
+      const { status, taskId, updatedTask } = action.payload;
+      const task = state.tasks[status].find((task) => task.id === taskId);
+      if (task) {
+        Object.assign(task, updatedTask);
       }
     },
   },
