@@ -77,11 +77,11 @@ export default function TodoSection({ tasks }) {
           <h2 className="font-semibold">To Do</h2>
           <span className="ml-2 bg-gray-200 px-2 rounded-full text-sm">{tasks.length}</span>
         </div>
-        <button onClick={() => setShowAddForm(true)} className="p-1 hover:bg-gray-100 rounded">
-          <Plus size={20} />
+        <button onClick={() => setShowAddForm(true)} className="p-1 hover:bg-gray-100 rounded bg-[#d4cef2]">
+          <Plus size={12} />
         </button>
       </div>
-
+      <hr className="bg-[#5030e5] h-1 border-none rounded-md my-6"/>
       {showAddForm && (
         <form onSubmit={handleAddTask} className="mb-4 p-4 bg-white rounded-lg shadow-sm">
           <input

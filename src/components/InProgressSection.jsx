@@ -54,9 +54,10 @@ export default function InProgressSection({ tasks }) {
           onClick={() => setShowAddForm(true)}
           className="p-1 hover:bg-gray-100 rounded"
         >
-          <Plus size={20} />
+          <Plus size={13} />
         </button>
       </div>
+      <hr className="bg-[#ffa500] h-1 my-6 rounded-md border-none"/>
       {showAddForm && (
         <form
           onSubmit={handleAddTask}
