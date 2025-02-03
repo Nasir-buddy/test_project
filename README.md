@@ -73,9 +73,6 @@ Make sure you have the following installed:
 2. **Move Tasks:**
    - Drag a task card and drop it into the desired section.
 
-3. **Authentication:**
-   - Log in or sign up to start managing your tasks.
-
 ## Contributing
 
 Contributions are welcome! Please follow these steps to contribute:
