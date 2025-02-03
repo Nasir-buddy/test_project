@@ -12,8 +12,8 @@ A modern web application for managing tasks in a task board-style interface.
 - 
 ## Tech Stack
 
-- **Frontend:** React.js, Next.js, Tailwind CSS
-- **Backend:** Node.js, Express.js
+- **Frontend:** React.js, Tailwind CSS
+- **Backend:** Node.js
 - **Drag-and-Drop:** dnd-kit
 - **State Management:** Redux
 - **Due Date and Reminder:** Add due date functionality with a reminder option
@@ -51,13 +51,6 @@ Make sure you have the following installed:
    yarn install
    ```
 
-3. **Set up environment variables:**
-   Create a `.env` file in the root directory and add the following:
-   ```env
-   MONGO_URI=your_mongodb_connection_string
-   JWT_SECRET=your_jwt_secret
-   ```
-
 4. **Start the development server:**
    Using npm:
    ```bash
@@ -90,7 +83,7 @@ Contributions are welcome! Please follow these steps to contribute:
 1. Fork the repository.
 2. Create a new branch:
    ```bash
-   git checkout -b feature-name
+   git checkout -u origin
    ```
 3. Commit your changes:
    ```bash
@@ -113,4 +106,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 
 ---
 
-Feel free to explore, use, and contribute to the project. Happy coding!
+
