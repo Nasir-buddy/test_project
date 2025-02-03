@@ -6,8 +6,10 @@ A modern web application for managing tasks in a task board-style interface.
 
 - **Drag-and-Drop:** Move tasks between sections effortlessly using `dnd-kit`.
 - **Task Management:** Add tasks with details.
-- **Authentication:** Secure user access using JWT tokens.
-
+- **State Management:** Redux
+- **Due Date and Reminder:** Add due date functionality with a reminder option
+- **Customizable Task Fields:** Let users create custom fields (e.g., custom tags or priority levels)
+- 
 ## Tech Stack
 
 - **Frontend:** React.js, Next.js, Tailwind CSS
