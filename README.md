@@ -13,14 +13,13 @@ A modern web application for managing tasks in a task board-style interface.
 ## Tech Stack
 
 - **Frontend:** React.js, Tailwind CSS
-- **Backend:** Node.js
 - **Drag-and-Drop:** dnd-kit
 - **State Management:** Redux
 - **Due Date and Reminder:** Add due date functionality with a reminder option
 - **Subtasks:** Implement a feature to add subtasks to each main task, allowing for nested task
 - **Customizable Task Fields:** Let users create custom fields (e.g., custom tags or priority levels) 
 to suit different types of workflows.
-- 
+
 management within each task item. 
 ## Getting Started
 
