@@ -12,9 +12,7 @@ A modern web application for managing tasks in a task board-style interface.
 
 - **Frontend:** React.js, Next.js, Tailwind CSS
 - **Backend:** Node.js, Express.js
-- **Database:** MongoDB
 - **Drag-and-Drop:** dnd-kit
-- **Authentication:** FireBase
 - **State Management:** Redux
 - **Due Date and Reminder:** Add due date functionality with a reminder option
 - **Subtasks:** Implement a feature to add subtasks to each main task, allowing for nested task
