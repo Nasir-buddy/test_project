@@ -98,7 +98,7 @@ This project is licensed under the MIT License. See the `LICENSE` file for detai
 ## Acknowledgments
 
 - Special thanks to the creators of `dnd-kit` for the drag-and-drop functionality.
-- Thanks to the Next.js and Tailwind CSS communities for their invaluable resources.
+- Thanks to the React.js and Tailwind CSS communities for their invaluable resources.
 
 ---
 
