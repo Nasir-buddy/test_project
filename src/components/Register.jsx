@@ -29,7 +29,7 @@ function Register() {
         });
       }
       toast.success("User Registered Successfully!!", { position: "top-center" });
-      navigate("/dashboard");
+      navigate("/app");
     } catch (error) {
       toast.error(error.message, { position: "bottom-center" });
     }
